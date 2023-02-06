@@ -8,48 +8,65 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
+#define _QWERTY         0
+#define _SYMBOLS        1
+#define _ARROWS         2
+#define _NUMBERS        3
+#define _BLUETOOTH      4
+
 / {
         keymap {
                 compatible = "zmk,keymap";
 
-                default_layer {
+                /*
+                [_QWERTY] = LAYOUT(KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, 
+                                KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN,
+                                KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH,
+                                MO(_ARROWS), KC_LSFT, KC_SPC, MO(_SYMBOLS)),
+                */
+
+                QWERTY {
                         bindings = <
                 &kp Q &kp W &kp E       &kp R         &kp T           &kp Y     &kp U       &kp I        &kp O   &kp P    
                 &kp A &kp S &kp D       &kp F         &kp G           &kp H     &kp J       &kp K        &kp L   &kp SEMI 
                 &kp Z &kp X &kp C       &kp V         &kp B           &kp N     &kp M       &kp COMMA    &kp DOT &kp FSLH 
-                                        &kp LALT      &kp LGUI        &kp SPACE &mo 2 
+                                        &mo _ARROWS   &kp LSHFT       &kp SPACE &mo _SYMBOLS 
+                        >;
+                };
+
+                SYMBOLS {
+                                bindings = <
+                &kp EXCL  &kp AT        &kp HASH      &kp DLLR   &kp PRCNT   &kp CARET &kp AMPS  &kp KP_MULTIPLY &kp LPAR  &kp RPAR
+                &sk LSHFT &sk LCTRL     &sk LALT      &sk LCMD   &kp GRAVE   &kp SQT   &none     &none           &none     &kp ESC   
+                &kp MINUS &kp EQUAL     &kp LBKT      &kp RBKT   &kp BSLH    &kp UNDER &kp PLUS  &kp LBRC        &kp RBRC  &kp PIPE 
+                                        &mo _NUMBERS  &trans     &trans      &trans    
+                                >;
+                };
+
+                ARROWS {
+                        bindings = <
+                &lt BLUETOOTH TAB    &none      &none     &none         &none       &none    &none    &none     &none     &kp BACKSPACE
+                &sk LSHFT            &sk LCTRL  &sk LALT  &sk LCMD      &none       &kp LEFT &kp DOWN &kp UP    &kp RIGHT &kp DEL 
+                &none                &none      &none     &none         &none       &none    &none    &none     &none     &kp ENTER 
+                                                &trans    &trans        &trans   &mo _NUMBERS  
+                        >;
+                };
+
+                NUMBERS {
+                        bindings = <
+                &kp 1      &kp 2       &kp 3      &kp 4      &kp 5      &kp 6    &kp 7     &kp 8     &kp 9      &kp 0
+                &sk LSHFT  &sk LCTRL   &sk LALT   &sk LCMD   &none      &none    &sk RCMD  &sk RALT  &sk RCTRL  &sk RSHFT
+                &none      &none       &none      &none      &none      &none    &none     &none     &none      &none
+                           &trans      &trans                           &trans   &trans
                         >;
                 };
                 
-                lower_layer {
+                BLUETOOTH {
                         bindings = <
-                &none   &none    &none    &none         &none       &none    &none    &none    &none     &none 
-                &none   &none    &none    &none         &none       &kp LEFT &kp DOWN &kp UP   &kp RIGHT &none 
-                &none   &none    &none    &none         &none       &none    &none    &none    &none     &none 
-                                          &trans        &trans      &trans   &trans  
-                        >;
-                };
-
-                raise_layer {
-        // -----------------------------------------------------------------------------------------
-        // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
-        // | CTRL |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  |  `   |
-        // | SHFT |  -  |  =  |  [  |  ]  |  \  |   |  _  |  +  |  {  |  }  | "|" |  ~   |
-        //                    | GUI |     | SPC |   | ENT |     | ALT |
-                        bindings = <
-        &kp EXCL  &kp AT    &kp HASH   &kp DLLR   &kp PRCNT   &kp CARET &kp AMPS  &kp KP_MULTIPLY &kp LPAR  &kp RPAR
-        &kp N1    &kp N2    &kp N3     &kp N4     &kp N5      &kp N6    &kp N7    &kp N8          &kp N9    &kp N0   
-        &kp MINUS &kp EQUAL &kp LBKT   &kp RBKT   &kp BSLH    &kp UNDER &kp PLUS  &kp LBRC        &kp RBRC  &kp PIPE 
-                    	                &trans    &trans      &trans    &trans    
-                        >;
-                };
-
-                adjustment_layer {
-                        bindings = <
-   &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4       &none    &none          &none              &none     &none
-   &none           &none           &none           &none           &none              &none    &kp C_VOL_DN   &kp C_VOL_UP       &none     &none
-   &none           &none           &none           &none           &none              &none    &none          &none              &none     &none
-                                &bt BT_CLR         &reset                             &none    &none
+                &trans    &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3       &none    &none          &none              &none     &none
+                &none     &none           &none           &none           &none              &none    &kp C_VOL_DN   &kp C_VOL_UP       &none     &none
+                &none     &none           &none           &none           &none              &none    &none          &none              &none     &none
+                                                          &bt BT_CLR      &reset             &none    &none
                         >;
                 };
         };     
