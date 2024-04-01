@@ -9,6 +9,44 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
+
+        combos {
+                compatible = "zmk,combos";
+
+                combo_esc {
+                timeout-ms = <50>;
+                key-positions = <1 2>;
+                bindings = <&kp ESCAPE>;
+                };
+
+                combo_bksp {
+                timeout-ms = <50>;
+                key-positions = <10 9>;
+                bindings = <&kp BACKSPACE>;
+                };
+
+                combo_tab {
+                bindings = <&kp TAB>;
+                key-positions = <13 14>;
+                };
+
+                combo_shift {
+                bindings = <&kp LEFT_SHIFT>;
+                key-positions = <25 26>;
+                };
+
+                combo_delete {
+                bindings = <&kp SQT>;
+                key-positions = <21 22>;
+                };
+
+                combo_ret {
+                bindings = <&kp RET>;
+                key-positions = <33 34>;
+                };
+
+        };
+
         keymap {
                 compatible = "zmk,keymap";
 
